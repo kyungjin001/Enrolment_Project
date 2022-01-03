@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases> 
+		<typeAlias type = "com.kkj.project.dto.MemberDTO" alias="mdto"/>
+		<typeAlias type = "com.kkj.project.dto.BoardDTO" alias="bdto"/>
+		<typeAlias type = "com.kkj.project.dto.CommentDTO" alias="comment"/>	
+		<typeAlias type = "com.kkj.project.dto.EnrollmentDTO" alias="edto"/>	
+		<typeAlias type = "com.kkj.project.dto.GoodsDTO" alias="gdto"/>
+		<typeAlias type = "com.kkj.project.dto.LectureDTO" alias="ldto"/>
+		<typeAlias type = "com.kkj.project.dto.KakaoDTO" alias="kdto"/>												
+	</typeAliases>
+</configuration>

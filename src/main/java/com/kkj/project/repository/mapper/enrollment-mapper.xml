@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Enrollment">
+ 	<insert id="insertEnrollment" parameterType="edto">
+ 		insert into Enrollment_table(e_pro, e_space, e_person, e_name, e_div, m_id,r_number,e_count)
+ 			values(#{e_pro},#{e_space},#{e_person},#{e_name},#{e_div},#{m_id},#{r_number},0)
+
+ 	</insert>
+ 	
+ 	
+	 	<insert id="insertlecture" parameterType="long">
+ 		insert into lecture_table(m_number, e_number)
+ 			values(#{m_number},#{e_number})
+
+ 	</insert>
+ 
+	
+	
+  
+ 	<select id="findAll" resultType="edto">
+ 		select * from Enrollment_table
+ 	</select>
+
+ 		<select id="mylecture" resultType="edto">
+ 		select * from Enrollment_table
+ 		</select>
+  		
+ 		<delete id="delete" parameterType="long">
+  		delete from Enrollment_table where e_number=#{e_number}
+  		</delete> 
+  		
+  		<delete id="unlecture" parameterType="java.util.HashMap">
+  		delete from lecture_table where e_number=#{e_number} and m_number=#{m_number}
+  		</delete> 
+  		
+  		
+  	
+ 	 	 <select id="findById" parameterType="long" resultType="edto">
+ 		select * from Enrollment_table where e_number=#{e_number}
+ 		</select>
+ 		
+
+  		<select id="lecture" parameterType="long" resultType="edto">
+ 		select * from Enrollment_table where e_number=#{e_number}
+ 		</select>
+ 		
+ 		<update id="enrollmentcount" parameterType="long">
+		update Enrollment_table set
+		e_count=e_count+1 where e_number=#{e_number}
+		</update>
+ 		
+ 		<update id="unenrollmentcount" parameterType="long">
+		update Enrollment_table set
+		e_count=e_count-1 where e_number=#{e_number}
+		</update>
+
+ 		
+ 		
+ 		<select id="lecview" parameterType="long" resultType="edto">
+ 		select * from Enrollment_table as e, lecture_table as l where e.e_number = l.e_number and l.m_number=#{m_number};
+ 		</select>
+ 		
+		
+		 <select id="lecturedu" parameterType="java.util.HashMap" resultType="edto">
+ 		select * from lecture_table where e_number=#{e_number} and m_number=#{m_number}
+ 		</select>
+	
+  		<select id="mystudent" parameterType="long" resultType="edto">
+ 		select * from lecture_table where e_number=#{e_number}
+ 		</select>
+ 		
+ 			<select id="mystudentview" parameterType="ldto" resultType="mdto">
+ 		select * from member_table as m, lecture_table as l where m.m_number = l.m_number and l.m_number in 
+ 		<foreach collection="list" item="l" index="index" open="(" close=")" separator=",">
+ 			#{l.m_number}
+ 		</foreach>
+ 		
+ 		</select> 
+ 		 <select id="mystudentdu" parameterType="java.util.HashMap" resultType="mdto">
+ 		select * from lecture_table where e_number=#{e_number} and m_number=#{m_number}
+ 		</select>
+  			 	
+ 		 <update id="update" parameterType="edto">
+  		update Enrollment_table set e_space=#{e_space},e_person=#{e_person},e_div=#{e_div} where e_number=#{e_number}
+  		</update>
+  		
+  	
+ 	
+ 	
+ </mapper>

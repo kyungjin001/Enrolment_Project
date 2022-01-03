@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Goods">
+ 	<insert id="goodspg" parameterType="gdto">
+ 		insert into goods_table(g_name, g_contents, g_price, g_imagename,g_way,g_stock,m_id)
+ 			values(#{g_name},#{g_contents},#{g_price},#{g_imagename},#{g_way},#{g_stock},#{m_id})
+ 	</insert>
+ 	
+ 	
+ 		 <insert id="insertcart" parameterType="long">
+ 		insert into purchase_table(g_number, m_number)
+ 			values(#{g_number},#{m_number})
+
+ 	</insert>
+ 	
+ 	 		<select id="cartview" parameterType="long" resultType="gdto">
+ 		select * from goods_table as g, purchase_table as p where g.g_number = p.g_number and p.m_number=#{m_number};
+ 		</select>
+ 	
+	
+  
+ 	<select id="findAll" resultType="gdto">
+ 		select * from goods_table
+ 	</select>
+ 	
+ 	 	<select id="myenrollgs" resultType="gdto">
+ 		select * from goods_table
+ 	</select>
+
+ 		
+ 		
+ 		<delete id="delete" parameterType="long">
+  		delete from goods_table where g_number=#{g_number}
+  		</delete> 
+  		
+  			<delete id="unpurchase" parameterType="java.util.HashMap">
+  		delete from purchase_table where g_number=#{g_number} and m_number=#{m_number}
+  		</delete> 
+  		
+  	
+ 	 	 <select id="findById" parameterType="long" resultType="gdto">
+ 		select * from goods_table where g_number=#{g_number}
+ 		</select>
+ 		
+
+  		
+  			 	
+ 		 <update id="update" parameterType="gdto">
+  		update goods_table set g_contents=#{g_contents},g_price=#{g_price},g_imagename=#{g_imagename} where g_number=#{g_number}
+  		</update>
+  		
+  		<update id="test" parameterType="long">
+  		update goods_table set g_stock=(g_stock-1) where g_number=#{g_number}
+  		</update>
+
+ 	
+ 	
+ </mapper>

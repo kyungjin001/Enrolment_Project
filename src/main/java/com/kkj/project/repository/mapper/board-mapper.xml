@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+	<insert id="study" parameterType="bdto">
+		insert into study_table(t_writer, t_title, t_area, t_contents,t_hits,t_date,m_id)
+ 		values(#{t_writer},#{t_title},#{t_area},#{t_contents},0,now(),#{m_id})
+	</insert>
+
+
+
+	<select id="findAll" resultType="bdto">
+		select * from study_table
+	</select>
+
+	<delete id="delete" parameterType="long">
+		delete from study_table where t_number=#{t_number}
+	</delete>
+
+
+
+
+
+	<select id="pagingList" parameterType="int" resultType="bdto">
+		select *
+		from study_table order by t_number desc limit #{pagingStart}, 3
+	</select>
+	
+		<select id="pagingList1" parameterType="java.util.HashMap"
+		resultType="bdto">
+		select * from study_table order by t_number desc limit #{start},
+		#{limit}
+	</select>
+
+	<select id="count" resultType="int">
+		select count(t_number) from study_table
+	</select>
+
+
+	<select id="findById" parameterType="long" resultType="bdto">
+		select *
+		from study_table where t_number=#{t_number}
+	</select>
+
+	
+	<update id="updates" parameterType="long">
+		update study_table set
+		t_hits=t_hits+1 where t_number=#{t_number}
+	</update>
+
+
+
+
+
+	<update id="update" parameterType="bdto">
+		update study_table set
+		t_title=#{t_title},t_contents=#{t_contents},t_date=now(),t_area=#{t_area}
+		where
+		t_number=#{t_number}
+	</update>
+
+
+
+
+
+
+
+
+	<select id="search" parameterType="java.util.HashMap"
+		resultType="bdto">
+		select * from study_table
+		<include refid="sear"></include>
+	</select>
+
+	<sql id="sear">
+		<choose>
+			<when test="type=='t_title'">
+				where t_title like concat('%', #{word}, '%')
+			</when>
+			<when test="type=='t_writer'">
+				where t_writer like concat('%', #{word}, '%')
+			</when>
+		</choose>
+	</sql>
+
+
+
+
+
+
+</mapper>
